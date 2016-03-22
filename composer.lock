@@ -1,0 +1,239 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "f91b5e3a86e7315dbc100b0476df6e08",
+    "content-hash": "363fd5572a886b59ccb41077c2ddbf02",
+    "packages": [
+        {
+            "name": "php-amqplib/php-amqplib",
+            "version": "v2.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-amqplib/php-amqplib.git",
+                "reference": "eb8f94d97c8e79900accf77343dbd7eca7f58506"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/eb8f94d97c8e79900accf77343dbd7eca7f58506",
+                "reference": "eb8f94d97c8e79900accf77343dbd7eca7f58506",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "ext-sockets": "Use AMQPSocketConnection"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpAmqpLib\\": "PhpAmqpLib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Alvaro Videla"
+                }
+            ],
+            "description": "This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
+            "homepage": "https://github.com/videlalvaro/php-amqplib/",
+            "keywords": [
+                "message",
+                "queue",
+                "rabbitmq"
+            ],
+            "time": "2015-08-11 12:30:09"
+        },
+        {
+            "name": "virge/cli",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/siosphere/virge-cli.git",
+                "reference": "940ac103a5652c3573fa4732a1d533cccb15ca0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/siosphere/virge-cli/zipball/940ac103a5652c3573fa4732a1d533cccb15ca0e",
+                "reference": "940ac103a5652c3573fa4732a1d533cccb15ca0e",
+                "shasum": ""
+            },
+            "require": {
+                "virge/core": "dev-master",
+                "virge/enigma": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Virge\\": "Virge/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2016-02-05 17:46:28"
+        },
+        {
+            "name": "virge/core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/siosphere/virge-core.git",
+                "reference": "457558dc7b81fea55f1e81def22c5e70f6ff8b1e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/siosphere/virge-core/zipball/457558dc7b81fea55f1e81def22c5e70f6ff8b1e",
+                "reference": "457558dc7b81fea55f1e81def22c5e70f6ff8b1e",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Virge\\": "Virge/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2016-01-09 01:40:05"
+        },
+        {
+            "name": "virge/db",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/siosphere/virge-db.git",
+                "reference": "493eba818d8af4f4c2af867383adb7fe1a7ba62b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/siosphere/virge-db/zipball/493eba818d8af4f4c2af867383adb7fe1a7ba62b",
+                "reference": "493eba818d8af4f4c2af867383adb7fe1a7ba62b",
+                "shasum": ""
+            },
+            "require": {
+                "virge/cli": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Virge\\": "Virge/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2016-03-07 05:05:32"
+        },
+        {
+            "name": "virge/enigma",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/siosphere/virge-enigma.git",
+                "reference": "522829930906798623663bdfb719f33c2289ceb9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/siosphere/virge-enigma/zipball/522829930906798623663bdfb719f33c2289ceb9",
+                "reference": "522829930906798623663bdfb719f33c2289ceb9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mcrypt": "*",
+                "virge/core": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Virge\\": "Virge/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2016-03-07 05:15:01"
+        },
+        {
+            "name": "virge/graphite",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/siosphere/virge-graphite.git",
+                "reference": "ac893c22893fba063746741df12b7388b8bfd48f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/siosphere/virge-graphite/zipball/ac893c22893fba063746741df12b7388b8bfd48f",
+                "reference": "ac893c22893fba063746741df12b7388b8bfd48f",
+                "shasum": ""
+            },
+            "require": {
+                "php-amqplib/php-amqplib": "2.5.*",
+                "virge/cli": "dev-master",
+                "virge/core": "dev-master",
+                "virge/db": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Virge\\": "Virge/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2016-03-07 05:17:26"
+        },
+        {
+            "name": "virge/orm",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/siosphere/virge-orm.git",
+                "reference": "000f179b2a6e56b4454d59c3b4d85fffbd822eaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/siosphere/virge-orm/zipball/000f179b2a6e56b4454d59c3b4d85fffbd822eaa",
+                "reference": "000f179b2a6e56b4454d59c3b4d85fffbd822eaa",
+                "shasum": ""
+            },
+            "require": {
+                "virge/core": "dev-master",
+                "virge/db": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Virge\\": "Virge/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2016-03-18 10:03:41"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "virge/core": 20,
+        "virge/enigma": 20,
+        "virge/cli": 20,
+        "virge/db": 20,
+        "virge/graphite": 20,
+        "virge/orm": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

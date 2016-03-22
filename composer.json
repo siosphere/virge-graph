@@ -1,0 +1,19 @@
+{
+    "name": "virge/graph",
+    "description": "PHP Workflow Service powered by RabbitMQ via Virge::Graphite",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Kramer",
+            "email": "kramer@siosphere.com"
+        }
+    ],
+    "require": {
+        "virge/core": "dev-master",
+        "virge/enigma": "dev-master",
+        "virge/cli": "dev-master",
+        "virge/db": "dev-master",
+        "virge/graphite": "dev-master",
+        "virge/orm": "dev-master"
+    }
+}
