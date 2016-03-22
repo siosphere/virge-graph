@@ -1,7 +1,10 @@
 # Virge::Graph
 Virge::Graph is a simple workflow framework to provide scalable queue backed job processing.
 
-Virge::Graph required RabbitMQ, and a MySQL Database.
+Virge::Graph requires RabbitMQ (http://www.rabbitmq.com/) , and a MySQL Database (https://www.mysql.com/).
+
+Virge::Graph uses the Virge::Graphite queue library to handle all of the workers,
+and scaling. https://github.com/siosphere/virge-graphite
 
 ## Getting Started
 You will need to setup a RabbitMQ Server, and a MySQL Server. Both can be setup
@@ -154,7 +157,7 @@ simpler to setup.
 
 ## Defining a Workflow
 A workflow is a class that defines a series of tasks, and their dependencies, as
-well as their lifecycle callbacks.
+well as their life-cycle callbacks.
 
 ```
 class SimpleWorkflow extends Virge\Graph\Component\Workflow
@@ -169,7 +172,7 @@ class SimpleWorkflow extends Virge\Graph\Component\Workflow
         Graph::task('world', function(Job $job, TaskResult $result) {
             $result->setResult('world');
         })
-            ->dependsOn([StepOne::TASK_ID, 'a', 'b'])
+            ->dependsOn(['hello'])
             ->onComplete(function(Job $job) {
                 $hello = $job->getTask('hello');
                 $world = $job->getTask('world');
@@ -182,15 +185,32 @@ class SimpleWorkflow extends Virge\Graph\Component\Workflow
 }
 ```
 A task can be a Closure, or it can be a class that has a "run" method.
+```
+class HelloTask
+{
+    const TASK_ID = 'hello';
+    
+    public function run(Job $job, TaskResult $result)
+    {
+        $result->setResult('hello');
+    }
+}
+```
+And when defining, simply pass in the className
+```
+Graph::task(HelloTask::TASK_ID, HelloTask::class);
+```
 
 ## Pushing a job onto a workflow
-A Job is a class that extends the Virge\Graph\Component\Workflow\Job class, and 
-implements the "getData" method. 
-You can return complex data in getData, but be aware it is serialized and
+A Job is a Virge\Graph\Component\Workflow\Job object. You can setup initial data
+by using the "setData" function.
+You can setup complex data in setData, but be aware it is serialized and
 pushed onto multiple queues, so it is unwise to put large amounts of data,
 and better to pass simple data, and load in the data on each worker.
 
 ```
+use Virge\Graph;
+
 $job = new Job('simple');
 $job->setData('test123');
 
@@ -199,14 +219,16 @@ Graph::push($job);
 
 ## Working the Queue
 You must setup at least 1 worker to work the default virge:graph queue, this
-queue handles scheduling of tasks, lifecycle events, and updating tasks
-progress and syncing their results with the database.
+queue handles scheduling of tasks, life-cycle events, updating tasks
+progress, and syncing their results with the database.
+
 ```
 php -f vadmin.php virge:graphite:worker virge:graph
 ```
 
 On Advanced workflows, each task will be queued to it's own queue, to allow
 horizontal scalability.
+
 ```
 # replace workflowId and taskId below
 php -f vadmin.php virge:graphite:worker virge:graph:workflowId:taskId
