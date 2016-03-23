@@ -8,7 +8,7 @@
             "email": "kramer@siosphere.com"
         }
     ],
-    "require": {
+    "require-dev": {
         "virge/core": "dev-master",
         "virge/enigma": "dev-master",
         "virge/cli": "dev-master",
