@@ -15,5 +15,8 @@
         "virge/db": "dev-master",
         "virge/graphite": "dev-master",
         "virge/orm": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {"Virge\\": "Virge/"}
     }
 }
