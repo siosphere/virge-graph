@@ -31,8 +31,10 @@ class Graph
         
         $workflow = self::$workflows[$job->getWorkflowId()];
         $jobResult = new JobResult();
+        $jobResult->setToken(Enigma::hash($job->getWorkflowId() . mt_rand()));
         $jobResult->setWorkflowId($job->getWorkflowId());
         $jobResult->save();
+        $job->setJobId($jobResult->getId());
         
         self::setupJob($job, $workflow); //setup initial job tasks
         

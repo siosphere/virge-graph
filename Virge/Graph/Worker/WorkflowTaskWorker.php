@@ -19,12 +19,14 @@ class WorkflowTaskWorker
 {
     public function run(WorkflowTask $task)
     {
-        $workflow = Graph::workflow($task->getWorkflowId());
-        if(!$workflow) {
-            throw new \InvalidArgumentException(sprintf("%s is not a valid workflow", $task->getWorkflowId()));
+        try {
+            $workflow = Graph::workflow($task->getWorkflowId());
+            if(!$workflow) {
+                throw new \InvalidArgumentException(sprintf("%s is not a valid workflow", $task->getWorkflowId()));
+            }
+            $workflow->doTask($task->getTaskId(), $task->getJob());
+        } catch(\Exception $ex) {
+            Cli::output($ex->getMessage());
         }
-        
-        $workflow->doTask($task->getTaskId(), $task->getJob());
-        
     }
 }
