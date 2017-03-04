@@ -80,6 +80,9 @@ abstract class Workflow
             $taskResult->setStatus(TaskResult::STATUS_COMPLETE);
             $taskResult->setCompleted(1);
         }
+
+        $taskResult->save();
+        
         Graph::taskStatus($job, $taskResult); //push a task status onto the queue
     }
     

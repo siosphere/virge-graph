@@ -9,6 +9,7 @@
         }
     ],
     "require-dev": {
+        "virge/api": "dev-master",
         "virge/core": "dev-master",
         "virge/enigma": "dev-master",
         "virge/cli": "dev-master",

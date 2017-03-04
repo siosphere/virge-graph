@@ -7,42 +7,31 @@ use Virge\Graphite\Component\Task;
 /**
  * Do a workflow task
  */
-class WorkflowTask extends Task {
+class WorkflowTask extends Task 
+{
     
     const TASK_NAME = 'virge.graph.task.workflow';
-    
+
     /**
-     * @var string 
+     * @var int
      */
-    protected $workflowId;
-    
+    protected $jobId;
+
     /**
      * @var string 
      */
     protected $taskId;
     
-    /**
-     * @var Job
-     */
-    protected $job;
-    
-    /**
-     * @param string $workflowId
-     * @param string $taskId
-     */
-    public function __construct($workflowId, $taskId, $job)
+    public function __construct(int $jobId, $taskId, int $taskResultId)
     {
-        $this->job = $job;
+        $this->jobId = $jobId;
         $this->taskId = $taskId;
-        $this->workflowId = $workflowId;
+        $this->taskResultId = $taskResultId;
     }
     
-    /**
-     * @return Job
-     */
-    public function getJob()
+    public function getJobId() : int
     {
-        return $this->job;
+        return $this->jobId;
     }
 
     /**
@@ -53,13 +42,8 @@ class WorkflowTask extends Task {
         return $this->taskId;
     }
 
-    /**
-     * @return string
-     */
-    public function getWorkflowId()
+    public function getTaskResultId() : int
     {
-        return $this->workflowId;
+        return $this->taskResultId;
     }
-
-
 }

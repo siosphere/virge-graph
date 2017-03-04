@@ -33,35 +33,39 @@ class Graph
         $jobResult = new JobResult();
         $jobResult->setToken(Enigma::hash($job->getWorkflowId() . mt_rand()));
         $jobResult->setWorkflowId($job->getWorkflowId());
+        $jobResult->setStatus(JobResult::STATUS_SETUP);
         $jobResult->save();
         $job->setJobId($jobResult->getId());
         
         self::setupJob($job, $workflow); //setup initial job tasks
         
         $jobResult->setJob($job);
+        $jobResult->setStatus(JobResult::STATUS_QUEUED);
         $jobResult->save();
         
         $job->setJobId($jobResult->getId());
         
         
-        self::queueJob($job);
+        self::queueJob($jobResult->getId());
     }
     
-    public static function queueTask(Job $job, $taskId)
+    public static function queueTask(Job $job, $taskId, $taskResultId)
     {
-        self::queue(new WorkflowTask($job->getWorkflowId(), $taskId, $job), self::getQueueKey($job->getWorkflowId(), $taskId));
+        self::queue(new WorkflowTask($job->getJobId(), $taskId, $taskResultId), self::getQueueKey($job->getWorkflowId(), $taskId));
     }
     
-    protected static function queueJob(Job $job)
+    protected static function queueJob(int $jobId)
     {
-        self::queue(new ScheduleTask($job));
+        self::queue(new ScheduleTask($jobId));
     }
     
     protected static function setupJob(Job $job, Workflow $workflow)
     {
         foreach($workflow->getTasks() as $taskId => $task)
         {
-            $taskResult = new TaskResult($taskId);
+            $taskResult = new TaskResult();
+            $taskResult->setTaskId($taskId);
+            $taskResult->setStatus(TaskResult::STATUS_QUEUED);
             $taskResult->setJobId($job->getJobId());
             $taskResult->save();
             $job->addTask($taskResult);
@@ -85,7 +89,7 @@ class Graph
     
     public static function taskStatus(Job $job, TaskResult $result)
     {
-        self::queue(new JobUpdateTask($job->getJobId(), $result->getTaskId(), $result));
+        self::queue(new JobUpdateTask($job->getJobId(), $result->getTaskId(), $result->getId()));
     }
     
     protected static function queue(Task $task, $queue = self::GRAPH_QUEUE)

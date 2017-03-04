@@ -7,28 +7,23 @@ use Virge\Graphite\Component\Task;
 /**
  * Schedule the tasks for the given job
  */
-class ScheduleTask extends Task {
+class ScheduleTask extends Task 
+{
     
     const TASK_NAME = 'virge.graph.task.schedule';
     
-    /**
-     * @var Job
-     */
-    protected $job;
+    protected $jobId;
     
     /**
      * @param Job $job
      */
-    public function __construct($job)
+    public function __construct(int $jobId)
     {
-        $this->job = $job;
+        $this->jobId = $jobId;
     }
     
-    /**
-     * @return Job
-     */
-    public function getJob()
+    public function getJobId() : int
     {
-        return $this->job;
+        return $this->jobId;
     }
 }

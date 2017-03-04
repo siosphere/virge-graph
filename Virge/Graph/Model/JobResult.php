@@ -11,6 +11,7 @@ class JobResult extends Model
 {
     protected $_table = 'virge_graph_job_result';
     
+    const STATUS_SETUP = 'setup';
     const STATUS_COMPLETE = 'complete';
     const STATUS_PROCESSING = 'processing';
     const STATUS_FAIL = 'fail';
@@ -20,7 +21,6 @@ class JobResult extends Model
     {
         parent::__construct($data);
         
-        $this->setStatus(self::STATUS_QUEUED);
         $this->setCreatedOn(new \DateTime());
     }
     

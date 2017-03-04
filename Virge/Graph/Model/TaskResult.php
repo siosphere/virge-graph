@@ -15,14 +15,6 @@ class TaskResult extends Model
     const STATUS_FAIL = 'fail';
     const STATUS_QUEUED = 'queued';
     
-    public function __construct($taskId)
-    {
-        parent::__construct([
-            'task_id'       =>      $taskId,
-            'status'        =>      self::STATUS_QUEUED,
-        ]);
-    }
-    
     public function stepProgress($step)
     {
         $this->progress += $step;

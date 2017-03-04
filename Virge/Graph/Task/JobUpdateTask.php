@@ -22,20 +22,20 @@ class JobUpdateTask extends Task {
     protected $taskId;
     
     /**
-     * @var TaskResult
+     * @var int
      */
-    protected $taskResult;
+    protected $taskResultId;
     
     /**
      * @param string $jobId
      * @param string $taskId
      * @param TaskResult $taskResult
      */
-    public function __construct($jobId, $taskId, TaskResult $taskResult)
+    public function __construct($jobId, $taskId, int $taskResultId)
     {
         $this->jobId = $jobId;
         $this->taskId = $taskId;
-        $this->taskResult = $taskResult;
+        $this->taskResultId = $taskResultId;
     }
     
     /**
@@ -54,12 +54,9 @@ class JobUpdateTask extends Task {
         return $this->taskId;
     }
 
-    /**
-     * @return TaskResult
-     */
-    public function getTaskResult()
+    public function getTaskResultId() : int
     {
-        return $this->taskResult;
+        return $this->taskResultId;
     }
 
 

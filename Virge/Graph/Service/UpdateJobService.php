@@ -1,28 +1,24 @@
 <?php
-namespace Virge\Graph\Worker;
+namespace Virge\Graph\Service;
 
 use Virge\Graph;
 use Virge\Graph\Component\Workflow;
 use Virge\Graph\Component\Workflow\Job;
 use Virge\Graph\Model\JobResult;
 use Virge\Graph\Model\TaskResult;
-use Virge\Graph\Task\JobUpdateTask;
 
 use Virge\Cli;
+use Virge\ORM\Component\Collection\Filter;
 use Virge\Virge;
 
-/**
- * 
- * @author Michael Kramer
- */
-class JobUpdateWorker
+class UpdateJobService
 {
-    public function run(JobUpdateTask $task)
+    public function updateJob(int $jobId, $taskId, int $taskResultId)
     {
         //load workflow from job
         
         $jobResult = new JobResult();
-        if(!$jobResult->load($task->getJobId())) {
+        if(!$jobResult->load($jobId)) {
             return false; //TODO: log
         }
         
@@ -33,8 +29,17 @@ class JobUpdateWorker
             $jobResult->save();
             return false; //TODO: log
         }
-        
-        $taskResult = $task->getTaskResult();
+
+        $taskResult = TaskResult::findOne(function() use($taskResultId) {
+            Filter::eq('id', $taskResultId);
+        });
+
+        if(!$taskResult) {
+            $jobResult->setStatus(JobResult::STATUS_FAIL);
+            $jobResult->setError("Invalid Task Result");
+            $jobResult->save();
+            return false;
+        }
         
         $job = $jobResult->getJob();
         $job->addTask($taskResult);
@@ -42,12 +47,13 @@ class JobUpdateWorker
         $taskResult->save();
         $job->addTask($taskResult);
         $job->setJobId($jobResult->getId());
-        $this->scheduleRemainingTasks($workflow, $job, $taskResult);
+        $this->scheduleRemainingTasks($workflow, $job, $jobResult, $taskResult);
         $jobResult->setJob($job);
-        $jobResult->save();
+        
+        return $jobResult->save();
     }
-    
-    protected function scheduleRemainingTasks(Workflow $workflow, Job $job, TaskResult $lastCompletedTaskResult)
+
+    protected function scheduleRemainingTasks(Workflow $workflow, Job $job, JobResult $jobResult, TaskResult $lastCompletedTaskResult)
     {
         $taskResults = $job->getTasks();
         
@@ -72,7 +78,11 @@ class JobUpdateWorker
             
             return $ready;
         });
-        
+
+        if(empty($remaining)) {
+            return $this->finishJob($jobResult);
+        }
+
         foreach($remaining as $task) {
             Graph::queueTask($job, $task->getTaskId());
         }
@@ -92,5 +102,11 @@ class JobUpdateWorker
                 $task->fail($job);
                 break;
         }
+    }
+
+    protected function finishJob(JobResult $jobResult)
+    {
+        $jobResult->setStatus(JobResult::STATUS_COMPLETE);
+        $jobResult->save();
     }
 }
