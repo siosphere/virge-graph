@@ -4,7 +4,7 @@ use Virge\Api;
 use Virge\Core\Config;
 use Virge\Graph\Controller\GraphApiController;
 
-$apiVersion = Config::get('app', 'graph_api_verifier') ?? 'all';
+$apiVersion = Config::get('app', 'graph_api_version') ?? 'all';
 
 $scheduleEndpoint = Api::post(GraphApiController::SCHEDULE_TASKS_FOR_JOB);
 if(Config::get('app', 'graph_api_verifier')) {
