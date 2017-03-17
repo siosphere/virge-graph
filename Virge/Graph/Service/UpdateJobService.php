@@ -84,7 +84,8 @@ class UpdateJobService
         }
 
         foreach($remaining as $task) {
-            Graph::queueTask($job, $task->getTaskId());
+            $taskResult = $taskResults[$task->getTaskId()];
+            Graph::queueTask($job, $task->getTaskId(), $taskResult->getId());
         }
         
     }
