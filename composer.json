@@ -9,13 +9,13 @@
         }
     ],
     "require-dev": {
-        "virge/api": "dev-master",
-        "virge/core": "dev-master",
-        "virge/enigma": "dev-master",
-        "virge/cli": "dev-master",
-        "virge/db": "dev-master",
-        "virge/graphite": "dev-master",
-        "virge/orm": "dev-master"
+        "virge/api": "~1.2",
+        "virge/core": "~1.0",
+        "virge/enigma": "~1.0",
+        "virge/cli": "~2.0",
+        "virge/db": "~2.0",
+        "virge/graphite": "~2.0",
+        "virge/orm": "~2.0"
     },
     "autoload": {
         "psr-4": {"Virge\\": "Virge/"}
