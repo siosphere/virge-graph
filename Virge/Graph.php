@@ -49,9 +49,9 @@ class Graph
         self::queueJob($jobResult->getId());
     }
     
-    public static function queueTask(Job $job, $taskId, $taskResultId)
+    public static function queueTask(Job $job, $taskId, $taskResultId, $queue = null)
     {
-        self::queue(new WorkflowTask($job->getJobId(), $taskId, $taskResultId), self::getQueueKey($job->getWorkflowId(), $taskId));
+        self::queue(new WorkflowTask($job->getJobId(), $taskId, $taskResultId), $queue ?? self::getQueueKey($job->getWorkflowId(), $taskId));
     }
     
     protected static function queueJob(int $jobId)

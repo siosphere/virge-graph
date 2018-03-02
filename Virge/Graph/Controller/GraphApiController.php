@@ -24,6 +24,8 @@ class GraphApiController extends InternalApiController
             throw new ApiException("Invalid job");
         }
 
+        $workflow = Graph::workflow($jobResult->getWorkflowId());
+
         $job = $jobResult->getJob();
         if(!$job) {
             throw new ApiException("Invalid job");
@@ -32,11 +34,12 @@ class GraphApiController extends InternalApiController
         $tasks = $job->getTasks();
 
         $queuedTasks = 0;
-        foreach($tasks as $workflowTask)
+        foreach($tasks as $taskResult)
         {
-            if(empty($workflowTask->getDependencies())) {
+            if(empty($taskResult->getDependencies())) {
+                $workflowTask = $workflow->getTask($taskResult->getTaskId());
                 //queue it up
-                Graph::queueTask($job, $workflowTask->getTaskId(), $workflowTask->getId());
+                Graph::queueTask($job, $taskResult->getTaskId(), $taskResult->getId(), $workflowTask->getQueue());
                 $queuedTasks++;
             }
         }

@@ -25,13 +25,13 @@ abstract class Workflow
         Graph::resetScope();
     }
     
-    public function addTask($taskId, $callable)
+    public function addTask($taskId, $callable, $queue = null)
     {
         if(isset($this->tasks[$taskId])) {
             throw new \InvalidArgumentException(sprintf("Task %s was already defined", $taskId));
         }
         
-        return $this->tasks[$taskId] = new Task($callable, $taskId);
+        return $this->tasks[$taskId] = new Task($callable, $taskId, $queue);
     }
     
     public function getTask($taskId)

@@ -18,6 +18,8 @@ class Task
     protected $onProgress = null;
     
     protected $onFail = null;
+
+    protected $queue = null;
     
     public function __construct($callable, $taskId)
     {
@@ -107,6 +109,18 @@ class Task
         {
             call_user_func_array($this->onFail, [$job]);
         }
+    }
+
+    public function setQueue(string $queue)
+    {
+        $this->queue = $queue;
+
+        return $this;
+    }
+
+    public function getQueue()
+    {
+        return $this->queue;
     }
     
     public function getDependencies()
